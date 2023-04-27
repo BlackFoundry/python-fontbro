@@ -984,10 +984,19 @@ class Font:
             postscript_name_old, postscript_name
         )
 
+        if not style_name in ["Regular", "Bold", "Italic", "Bold Italic"]:
+            ext = " ".join(style_name.replace("Italic", "").split())
+            if ext:
+                family_name = f"{typographic_family_name} {ext}"
+            if "Italic" in style_name:
+                style_name = "Italic"
+            else:
+                style_name = "Regular"
+
         # update name records
         names = {
             self.NAME_FAMILY_NAME: family_name,
-            self.NAME_SUBFAMILY_NAME: subfamily_name,
+            self.NAME_SUBFAMILY_NAME: style_name,
             self.NAME_UNIQUE_IDENTIFIER: unique_identifier,
             self.NAME_FULL_NAME: full_name,
             self.NAME_POSTSCRIPT_NAME: postscript_name,
